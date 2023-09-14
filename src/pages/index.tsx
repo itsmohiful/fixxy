@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -13,7 +14,7 @@ const style = {
 export default function Home() {
   return (
     <>
-      <div style={...style}>Its Mohiful, Fixxy</div>
+      <Box sx={{ ...style }}>ItsMohiful, Fixxy</Box>
     </>
   );
 }
