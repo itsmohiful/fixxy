@@ -48,11 +48,12 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const menuRouteList = ["", "data", "profile", "settings", ""];
+const menuRouteList = ["", "data", "profile","user", "settings", ""];
 const menuListTranslations = [
   "Home",
   "Data",
   "Profile",
+  "User",
   "Settings",
   "Sign Out",
 ];
