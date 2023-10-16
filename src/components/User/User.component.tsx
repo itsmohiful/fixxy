@@ -3,15 +3,22 @@ import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useEffect } from "react";
+import { DatePicker } from "@mui/x-date-pickers";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { AddMoreButtonComponent } from "../Add-More-Component";
+import { UiFormFileUpload } from "../UiFormFileUpload";
+import axios from "axios";
 
 function UserComponent() {
+  const [selectedDate, setSelectedDate] = useState(null);
+  console.log({ selectedDate });
   type TUserForm = {
     firstName: string;
     lastName: string;
+    filePath: string;
+    date: string;
     address: [
       {
         street: string;
@@ -23,6 +30,8 @@ function UserComponent() {
   const defaultValue: TUserForm = {
     firstName: "",
     lastName: "",
+    filePath: "",
+    date: "",
     address: [
       {
         street: "",
@@ -70,6 +79,10 @@ function UserComponent() {
     setValue("address", demoData);
   }, []);
 
+  const AdminAuthTempFileServer = axios.create({
+    baseURL: "http://10.11.106.135:8080/storage/api/v1/file/upload?domain=TEMP",
+  });
+
   const onSubmit = (data: TUserForm) => {
     console.log("data", data);
     return;
@@ -100,6 +113,27 @@ function UserComponent() {
         label="Last Name"
         variant="outlined"
         {...register("lastName")}
+      />
+
+      {/*<TextField*/}
+      {/*  id="outlined-basic"*/}
+      {/*  type={"file"}*/}
+      {/*  label="File Path"*/}
+      {/*  variant="outlined"*/}
+      {/*  {...register("filePath")}*/}
+      {/*/>*/}
+      <UiFormFileUpload
+        control={control}
+        name={"filePath"}
+        server={AdminAuthTempFileServer}
+      />
+
+      <DatePicker
+        label={"Date"}
+        value={selectedDate}
+        onChange={(newValue) => {
+          setSelectedDate(newValue);
+        }}
       />
       <Box sx={{ py: 3 }}>
         {fields?.map((field, index) => {

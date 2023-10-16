@@ -9,6 +9,8 @@ import { createContext, useMemo, useState } from "react";
 import Header from "../Header";
 import Layout from "../Layout";
 import createEmotionCache from "../utils/createEmotionCache";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -50,22 +52,27 @@ export default function MyApp(props: MyAppProps) {
 
   return (
     <CacheProvider value={emotionCache}>
-      <ColorModeContext.Provider value={colorMode}>
-        <Head>
-          {/* <title>Fixxy</title> */}
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <ThemeProvider
-          theme={mode === "dark" ? darkThemeChosen : lightThemeChosen}
-        >
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Header ColorModeContext={ColorModeContext} />
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ThemeProvider>
-      </ColorModeContext.Provider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <ColorModeContext.Provider value={colorMode}>
+          <Head>
+            {/* <title>Fixxy</title> */}
+            <meta
+              name="viewport"
+              content="initial-scale=1, width=device-width"
+            />
+          </Head>
+          <ThemeProvider
+            theme={mode === "dark" ? darkThemeChosen : lightThemeChosen}
+          >
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Header ColorModeContext={ColorModeContext} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </ColorModeContext.Provider>
+      </LocalizationProvider>
     </CacheProvider>
   );
 }
