@@ -1,14 +1,14 @@
-import { AxiosError } from 'axios';
-import { useEffect, useRef, useState } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import { AxiosError } from "axios";
+import { useEffect, useRef, useState } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import {
-  _TUiFileUploadHookProps,
+  _TFileUploadHookProps,
   _TUpUploadState,
   _TUpUploadStateInitialValue,
-} from './_uiFileUploadUI.decorator';
+} from "./FileUploadType";
 
-interface IUiFileUploadAllowExtensions {
+interface IFileUploadAllowExtensions {
   Image: string[];
   PDF: string[];
   Excel: string[];
@@ -17,25 +17,25 @@ interface IUiFileUploadAllowExtensions {
   ZIP: string[];
 }
 
-export const IUiFileUploadAllowExtensions: IUiFileUploadAllowExtensions = {
-  Image: ['jpeg', 'jpg', 'png', 'gif', 'heic', 'heif'],
-  PDF: ['pdf'],
-  Excel: ['xlsx'],
-  Doc: ['docx', 'pptx', 'doc', 'pptx'],
-  CSV: ['csv'],
-  ZIP: ['zip'],
+export const IFileUploadAllowExtensions: IFileUploadAllowExtensions = {
+  Image: ["jpeg", "jpg", "png", "gif", "heic", "heif"],
+  PDF: ["pdf"],
+  Excel: ["xlsx"],
+  Doc: ["docx", "pptx", "doc", "pptx"],
+  CSV: ["csv"],
+  ZIP: ["zip"],
 };
-export default function useUiFileUploadHook(props: _TUiFileUploadHookProps) {
+export default function useUiFileUploadHook(props: _TFileUploadHookProps) {
   const uploadFileInputRef = useRef<null | HTMLInputElement>(null);
   const [getOriginalFileInfo, setOriginalFileInfo] = useState({
-    name: '',
+    name: "",
   });
 
   useEffect(() => {
     // console.log('originalFileName useUiFileUploadHook', props.originalFileName);
     setOriginalFileInfo((prevState) => ({
       ...prevState,
-      name: props.originalFileName || '',
+      name: props.originalFileName || "",
     }));
   }, [props.originalFileName]);
 
@@ -45,13 +45,13 @@ export default function useUiFileUploadHook(props: _TUiFileUploadHookProps) {
     server,
     onChange,
     afterChange,
-    allowFiles = ['Image', 'PDF', 'Excel', 'Doc', 'CSV'],
-    maxAllowSize = Number(process.env['FILE_UPLOAD_MAX_SIZE']),
+    allowFiles = ["Image", "PDF", "Excel", "Doc", "CSV"],
+    maxAllowSize = Number(process.env["FILE_UPLOAD_MAX_SIZE"]),
     isDemo = false,
   } = props;
 
   const [uploadState, setUploadState] = useState<_TUpUploadState>(
-    _TUpUploadStateInitialValue
+    _TUpUploadStateInitialValue,
   );
 
   const config = {
@@ -60,7 +60,7 @@ export default function useUiFileUploadHook(props: _TUiFileUploadHookProps) {
       total: number;
     }) {
       const percentCompleted = Math.round(
-        (progressEvent.loaded / progressEvent.total) * 100
+        (progressEvent.loaded / progressEvent.total) * 100,
       );
       setUploadState((prevState) => ({
         ...prevState,
@@ -71,27 +71,27 @@ export default function useUiFileUploadHook(props: _TUiFileUploadHookProps) {
 
   const request = (data: FormData) => {
     if (isDemo) {
-      return server.get('', {
+      return server.get("", {
         onUploadProgress: config.onUploadProgress,
       });
     }
-    return server.post('', data, config);
+    return server.post("", data, config);
   };
 
   const makeFileUrl = (fileName: string) => {
-    if (isDemo) return 'https://via.placeholder.com/300/09f/fff.png';
-    return `${process.env['FILE_SERVER_URL']}/storage/api/v1/file/${fileName}?downloadable=false`;
+    if (isDemo) return "https://via.placeholder.com/300/09f/fff.png";
+    return `${process.env["FILE_SERVER_URL"]}/storage/api/v1/file/${fileName}?downloadable=false`;
   };
 
   const fileOnUpload = (e: any) => {
     const fileName = e.target.name;
     const value = e.target.files[0];
     if (uploadFileInputRef.current) {
-      uploadFileInputRef.current.value = '';
+      uploadFileInputRef.current.value = "";
     }
 
     if (value) {
-      const nameSplit = value.name.split('.');
+      const nameSplit = value.name.split(".");
 
       // catch extension
       const ext = String(nameSplit[nameSplit?.length - 1]).toLowerCase();
@@ -100,22 +100,22 @@ export default function useUiFileUploadHook(props: _TUiFileUploadHookProps) {
       const sizeToMb = value.size / (1024 * 1024);
 
       // allow file types
-      let allowFileTypes = IUiFileUploadAllowExtensions['Image'];
+      let allowFileTypes = IFileUploadAllowExtensions["Image"];
 
       if (allowFiles) {
         allowFileTypes = allowFiles.reduce((accu: string[], file) => {
-          return [...accu, ...IUiFileUploadAllowExtensions[file]];
+          return [...accu, ...IFileUploadAllowExtensions[file]];
         }, []);
       }
 
       // check file type
       if (!allowFileTypes.some((ele) => ele === ext)) {
-        const allowFileTypesString = allowFiles.join(', ');
+        const allowFileTypesString = allowFiles.join(", ");
         /*  enqueueSnackbar(`Only ${allowFileTypesString} are allowed!`, {
-                          variant: 'error',
-                        }); */
+                                                                  variant: 'error',
+                                                                }); */
         SwalBar.fire({
-          icon: 'error',
+          icon: "error",
           title: `Only ${allowFileTypesString} are allowed!`,
           timer: 3000,
           showConfirmButton: false,
@@ -130,7 +130,7 @@ export default function useUiFileUploadHook(props: _TUiFileUploadHookProps) {
           //   variant: 'error',
           // });
           SwalBar.fire({
-            icon: 'error',
+            icon: "error",
             title: `File max size is ${maxAllowSize * 1000} KB`,
             timer: 3000,
             showConfirmButton: false,
@@ -140,7 +140,7 @@ export default function useUiFileUploadHook(props: _TUiFileUploadHookProps) {
           //   variant: 'error',
           // });
           SwalBar.fire({
-            icon: 'error',
+            icon: "error",
             title: `File max size is ${maxAllowSize} MB`,
             timer: 3000,
             showConfirmButton: false,
@@ -156,7 +156,7 @@ export default function useUiFileUploadHook(props: _TUiFileUploadHookProps) {
       }));
 
       const data = new FormData();
-      data.append('file', value);
+      data.append("file", value);
       request(data)
         .then((res) => {
           onChange && onChange(res.data.name, fileName);

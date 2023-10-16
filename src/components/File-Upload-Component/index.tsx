@@ -14,25 +14,19 @@ import { SxProps, Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { AxiosInstance } from "axios";
 import * as React from "react";
-import useUiFileUploadHook from "./_uiFileUploadUI.hook";
+import useUiFileUploadHook from "./FileUpload.hook";
 import {
-  _uiFileProfilePicUploadStyle,
-  _uiFileUploadProgressBox,
-  _uiFileUploadStyle,
-  _uiFileUploadTickIconStyle,
-} from "./_uiFileUploadUI.style";
+  _FileProfilePicUploadStyle,
+  _FileUploadProgressBox,
+  _FileUploadStyle,
+  _FileUploadTickIconStyle,
+} from "./FileUpload.style";
 
-export type IUImageAllowProps =
-  | "Image"
-  | "PDF"
-  | "Excel"
-  | "Doc"
-  | "CSV"
-  | "ZIP";
+export type ImageAllowProps = "Image" | "PDF" | "Excel" | "Doc" | "CSV" | "ZIP";
 
 export type IUiFileUploadType = "Default" | "ProfilePic";
 
-export interface IUiFileUploadProps {
+export interface IFileUploadProps {
   title?: React.ReactNode;
   placeholder?: React.ReactNode;
   originalFileName?: string | string[];
@@ -48,7 +42,7 @@ export interface IUiFileUploadProps {
   name?: string;
   className?: string;
   server: AxiosInstance;
-  allowFiles?: IUImageAllowProps[];
+  allowFiles?: ImageAllowProps[];
   maxAllowSize?: number;
   isDemo?: boolean;
   isFocus?: boolean;
@@ -56,7 +50,7 @@ export interface IUiFileUploadProps {
   type?: IUiFileUploadType;
 }
 
-export function UiFileUpload(props: IUiFileUploadProps) {
+export function UiFileUpload(props: IFileUploadProps) {
   const {
     title,
     error,
@@ -119,10 +113,8 @@ export function UiFileUpload(props: IUiFileUploadProps) {
       )}
       {type === "Default" && (
         <Box sx={{ width: "100%" }}>
-          <Box sx={_uiFileUploadStyle}>
-            <Box
-              sx={{ ..._uiFileUploadProgressBox(uploadState.uploadedAmount) }}
-            >
+          <Box sx={_FileUploadStyle}>
+            <Box sx={{ ..._FileUploadProgressBox(uploadState.uploadedAmount) }}>
               &nbsp;
             </Box>
             <Box className="fileNameContainer" sx={{ width: "100%" }}>
@@ -190,7 +182,7 @@ export function UiFileUpload(props: IUiFileUploadProps) {
                 <Box className="fileUploadActionIconBox">
                   {uploadState.uploadedAmount + "%"}
                   {uploadState.uploadedAmount === 100 && (
-                    <Done style={_uiFileUploadTickIconStyle} />
+                    <Done style={_FileUploadTickIconStyle} />
                   )}
                 </Box>
               )}
@@ -200,10 +192,8 @@ export function UiFileUpload(props: IUiFileUploadProps) {
       )}
       {type === "ProfilePic" && (
         <Box sx={{ width: "100%" }}>
-          <Box sx={_uiFileProfilePicUploadStyle}>
-            <Box
-              sx={{ ..._uiFileUploadProgressBox(uploadState.uploadedAmount) }}
-            >
+          <Box sx={_FileProfilePicUploadStyle}>
+            <Box sx={{ ..._FileUploadProgressBox(uploadState.uploadedAmount) }}>
               &nbsp;
             </Box>
             <Box className="fileNameContainer" sx={{ width: "100%" }}>
@@ -260,7 +250,7 @@ export function UiFileUpload(props: IUiFileUploadProps) {
                 <Box className="fileUploadProgressBox">
                   {uploadState.uploadedAmount + "%"}
                   {uploadState.uploadedAmount === 100 && (
-                    <Done style={_uiFileUploadTickIconStyle} />
+                    <Done style={_FileUploadTickIconStyle} />
                   )}
                 </Box>
               )}

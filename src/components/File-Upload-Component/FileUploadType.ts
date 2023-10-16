@@ -1,7 +1,7 @@
-import { AxiosInstance } from 'axios';
-import { IUImageAllowProps } from './index';
+import { AxiosInstance } from "axios";
+import { IUImageAllowProps } from "./index";
 
-export type _TUiFileUploadHookProps = {
+export type _TFileUploadHookProps = {
   server: AxiosInstance;
   onChange?: (fileName: string, inputName: string) => void;
   afterChange?: (event: any) => void;

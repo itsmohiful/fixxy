@@ -7,12 +7,12 @@ import {
   FieldPath,
   get,
 } from "react-hook-form";
-import { IUiFileUploadProps, UiFileUpload } from "../UiFileUpload";
+import { IFileUploadProps, UiFileUpload } from "../File-Upload-Component";
 
-type TUiFormFileUploadProps<
+type TFormFileUploadProps<
   TFormType,
   TName extends FieldPath<TFormType>,
-> = IUiFileUploadProps & {
+> = IFileUploadProps & {
   name: TName;
   control: Control<TFormType>;
   errors?: FieldErrors<TFormType>;
@@ -21,8 +21,8 @@ type TUiFormFileUploadProps<
   afterDelete?: (data: any) => void;
 };
 
-export function UiFormFileUpload<TFormType, TName extends FieldPath<TFormType>>(
-  props: TUiFormFileUploadProps<TFormType, TName>,
+export function FormFileUpload<TFormType, TName extends FieldPath<TFormType>>(
+  props: TFormFileUploadProps<TFormType, TName>,
 ) {
   const error = get(props.errors || {}, props.name);
   const { afterDelete } = props;

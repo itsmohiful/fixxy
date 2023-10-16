@@ -4,11 +4,14 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { DatePicker } from "@mui/x-date-pickers";
+import * as React from "react";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { AddMoreButtonComponent } from "../Add-More-Component";
-import { UiFormFileUpload } from "../UiFormFileUpload";
+import { FormDatePicker } from "../Date-Picker-Component";
+import FromDropDownComponent from "../Form-Dropdown-Component";
+import { FormFileUpload } from "../Form-File-Upload-Component";
 import axios from "axios";
 
 function UserComponent() {
@@ -42,7 +45,7 @@ function UserComponent() {
 
   const validation = yup
     .object({
-      firstName: yup.string().nullable(),
+      firstName: yup.string().required("This Field Is Required"),
       lastName: yup.string().required("This Field Is Required"),
     })
     .required("This Field Is Required");
@@ -64,7 +67,7 @@ function UserComponent() {
     name: "address",
   });
 
-  console.log({ fields });
+  // console.log({ fields });
   console.log({ errors });
 
   const demoData = [
@@ -75,7 +78,6 @@ function UserComponent() {
 
   useEffect(() => {
     setValue("firstName", "test");
-    setValue("lastName", "last test");
     setValue("address", demoData);
   }, []);
 
@@ -91,6 +93,19 @@ function UserComponent() {
   const onClear = () => {
     reset();
   };
+  const countries = [
+    { id: "AD", label: "Andorr" },
+    {
+      id: "AE",
+      label: "United Arab Emirates",
+    },
+    { id: "AF", label: "Afghanista" },
+    {
+      id: "AG",
+      label: "Antigua and Barbuda",
+    },
+    { id: "AI", label: "Anguill" },
+  ];
 
   return (
     <Box
@@ -107,12 +122,19 @@ function UserComponent() {
         label="First Name"
         variant="outlined"
         {...register("firstName")}
+        error={!!errors.firstName}
+        helperText={errors.firstName?.message}
+        color="info"
       />
-      <TextField
-        id="outlined-basic"
-        label="Last Name"
-        variant="outlined"
-        {...register("lastName")}
+      <FromDropDownComponent
+        name="lastName"
+        control={control}
+        label="Choose a country"
+        options={countries}
+        error={!!errors?.lastName?.message}
+        helperText={errors?.lastName?.message}
+        onChange={(id) => setValue("lastName", id)}
+        required
       />
 
       {/*<TextField*/}
@@ -122,19 +144,13 @@ function UserComponent() {
       {/*  variant="outlined"*/}
       {/*  {...register("filePath")}*/}
       {/*/>*/}
-      <UiFormFileUpload
+      <FormFileUpload
         control={control}
         name={"filePath"}
         server={AdminAuthTempFileServer}
       />
 
-      <DatePicker
-        label={"Date"}
-        value={selectedDate}
-        onChange={(newValue) => {
-          setSelectedDate(newValue);
-        }}
-      />
+      <FormDatePicker label={"Date"} control={control} {...register("date")} />
       <Box sx={{ py: 3 }}>
         {fields?.map((field, index) => {
           const arrayIndex = index.toString();
