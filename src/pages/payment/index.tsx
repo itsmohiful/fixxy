@@ -1,7 +1,5 @@
-import PaymentsComponent from "@/components/payments/PaymentsComponent";
-
 function Payment() {
-  return <PaymentsComponent />;
+  return <></>;
 }
 
 export default Payment;

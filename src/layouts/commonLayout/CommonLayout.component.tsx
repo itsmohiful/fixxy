@@ -1,15 +1,15 @@
-import Footer from "@/components/Footer";
-import SideMenu from "@/components/SideMenu";
 import Head from "next/head";
-import scss from "./Layout.module.scss";
+import FooterComponent from "../footer/Footer.component";
+import SideMenuComponent from "../sideMenu/SideMenu.component";
+import scss from "./CommonLayout.module.scss";
 
-const Layout = (props: any) => {
+const LayoutComponent = (props: any) => {
   // const { data: session } = useSession();
 
   return (
     <>
       <Head>
-        <title>DataSoft - Data Dashboard</title>
+        <title>Fixxy</title>
         <meta name="description" content="Data Dashboard" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -20,12 +20,13 @@ const Layout = (props: any) => {
         style={{ padding: "0 24px 0 80px" }}
       >
         {/* {session && <SideMenu />} */}
-        <SideMenu />
+        {/*<SideMenuComponent />*/}
+
         {props.children}
-        <Footer />
+        {/*<FooterComponent />*/}
       </main>
     </>
   );
 };
 
-export default Layout;
+export default LayoutComponent;

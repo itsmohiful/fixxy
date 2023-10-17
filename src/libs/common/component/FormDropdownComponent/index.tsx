@@ -1,5 +1,8 @@
+import { OverridableStringUnion } from "@mui/types";
 import * as React from "react";
-import TextField from "@mui/material/TextField";
+import TextField, {
+  TextFieldPropsColorOverrides,
+} from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Controller } from "react-hook-form";
 
@@ -7,6 +10,8 @@ interface FormDropDownComponentProps {
   name: string;
   control: any; // pass the 'control' from useForm
   label?: string;
+  // @ts-ignore
+  color?: "error" | "info" | "primary" | "secondary" | "success" | "warning";
   options: { id: string; label: string }[];
   error: boolean;
   helperText?: string;
@@ -20,6 +25,7 @@ export default function FromDropDownComponent({
   label = "",
   options = [{ id: "", label: "" }],
   error,
+  color = "info",
   helperText = "",
   required = false,
   onChange,
@@ -53,6 +59,7 @@ export default function FromDropDownComponent({
               helperText={helperText}
               inputRef={ref}
               required={required}
+              color={color}
               inputProps={{
                 ...params.inputProps,
                 autoComplete: "new-password", // disable autocomplete and autofill

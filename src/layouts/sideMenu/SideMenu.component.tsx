@@ -48,7 +48,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const menuRouteList = ["", "data", "profile","user", "settings", ""];
+const menuRouteList = ["", "data", "profile", "user", "settings", ""];
 const menuListTranslations = [
   "Home",
   "Data",
@@ -65,7 +65,7 @@ const menuListIcons = [
   <ExitToAppIcon key={"exit"} />,
 ];
 
-const SideMenu = () => {
+const SideMenuComponent = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const mobileCheck = useMediaQuery("(min-width: 600px)");
@@ -157,4 +157,4 @@ const SideMenu = () => {
   );
 };
 
-export default SideMenu;
+export default SideMenuComponent;

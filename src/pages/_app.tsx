@@ -6,8 +6,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { createContext, useMemo, useState } from "react";
-import Header from "../Header";
-import Layout from "../Layout";
+import LayoutComponent from "../layouts/commonLayout/CommonLayout.component";
+import HeaderComponent from "../layouts/header/Header.component";
 import createEmotionCache from "../utils/createEmotionCache";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -66,10 +66,10 @@ export default function MyApp(props: MyAppProps) {
           >
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Header ColorModeContext={ColorModeContext} />
-            <Layout>
+            <HeaderComponent ColorModeContext={ColorModeContext} />
+            <LayoutComponent>
               <Component {...pageProps} />
-            </Layout>
+            </LayoutComponent>
           </ThemeProvider>
         </ColorModeContext.Provider>
       </LocalizationProvider>

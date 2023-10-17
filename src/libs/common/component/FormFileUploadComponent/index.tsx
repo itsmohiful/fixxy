@@ -7,7 +7,7 @@ import {
   FieldPath,
   get,
 } from "react-hook-form";
-import { IFileUploadProps, UiFileUpload } from "../File-Upload-Component";
+import { IFileUploadProps, UiFileUpload } from "../FileUploadComponent";
 
 type TFormFileUploadProps<
   TFormType,

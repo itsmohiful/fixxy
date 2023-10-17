@@ -8,10 +8,10 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { AddMoreButtonComponent } from "../Add-More-Component";
-import { FormDatePicker } from "../Date-Picker-Component";
-import FromDropDownComponent from "../Form-Dropdown-Component";
-import { FormFileUpload } from "../Form-File-Upload-Component";
+import { AddMoreButtonComponent } from "../../libs/common/component/AddMoreButtonComponent";
+import { FormDatePicker } from "../../libs/common/component/DatePickerComponent";
+import FromDropDownComponent from "../../libs/common/component/FormDropdownComponent";
+import { FormFileUpload } from "../../libs/common/component/FormFileUploadComponent";
 import axios from "axios";
 
 function UserComponent() {
@@ -19,7 +19,7 @@ function UserComponent() {
   console.log({ selectedDate });
   type TUserForm = {
     firstName: string;
-    lastName: string;
+    lastName: any;
     filePath: string;
     date: string;
     address: [
@@ -46,7 +46,6 @@ function UserComponent() {
   const validation = yup
     .object({
       firstName: yup.string().required("This Field Is Required"),
-      lastName: yup.string().required("This Field Is Required"),
     })
     .required("This Field Is Required");
 
